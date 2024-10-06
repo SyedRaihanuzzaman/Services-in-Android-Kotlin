@@ -5,6 +5,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.IBinder
 import android.provider.Settings
+import androidx.core.app.NotificationCompat
 
 class MyService : Service() {
 
@@ -40,6 +41,17 @@ class MyService : Service() {
         mediaPlayer = MediaPlayer.create(this,Settings.System.DEFAULT_RINGTONE_URI)
         mediaPlayer.start()
         mediaPlayer.isLooping = true
+
+        // for foreground service
+        val notification = NotificationCompat.Builder(
+            this,
+            "my_channel"
+        ).setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Foreground Service")
+            .setContentText("Foreground service is running")
+            .setOngoing(true)
+            .build()
+        startForeground(1001,notification)
     }
 }
 
